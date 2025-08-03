@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Naruto API Tester</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 6px;
+    }
+    .background{
+      width: 150px;
+      height: auto;
+      vertical-align: middle;
+      margin-left: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mahlori's Naruto API <img src="background.jpeg" alt="background image" class="background"></h1>
+
+  <button onclick="fetchAll()">Get All Characters</button>
+  <button onclick="fetchById(1)">Get Naruto (ID 1)</button>
+  <button onclick="fetchByVillage('Konohagakure')">Get by Village: Konoha</button>
+
+  <div class="output" id="output">Click a button to see results here...</div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api/naruto';
+
+    function fetchAll() {
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => display(data))
+        .catch(err => console.error(err));
+    }
+
+    function fetchById(id) {
+      fetch(`${API_URL}/${id}`)
+        .then(res => res.json())
+        .then(data => display(data))
+        .catch(err => console.error(err));
+    }
+
+    function fetchByVillage(village) {
+      fetch(`${API_URL}/village/${village}`)
+        .then(res => res.json())
+        .then(data => display(data))
+        .catch(err => console.error(err));
+    }
+
+    function display(data) {
+      document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
